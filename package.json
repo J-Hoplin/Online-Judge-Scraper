@@ -13,5 +13,9 @@
     "prettier": "^3.2.5",
     "tsc": "^2.0.4",
     "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "puppeteer": "^22.0.0",
+    "puppeteer-core": "^22.0.0"
   }
 }
