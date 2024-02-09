@@ -1,0 +1,17 @@
+{
+  "name": "Online-Judge-Scraper",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/J-Hoplin/Online-Judge-Scraper.git",
+  "author": "J-hoplin1 <jhoplin7259@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.11.17",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "eslint": "^8.56.0",
+    "prettier": "^3.2.5",
+    "tsc": "^2.0.4",
+    "typescript": "^5.3.3"
+  }
+}
