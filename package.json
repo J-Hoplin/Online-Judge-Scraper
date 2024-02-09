@@ -5,6 +5,10 @@
   "repository": "https://github.com/J-Hoplin/Online-Judge-Scraper.git",
   "author": "J-hoplin1 <jhoplin7259@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "compile": "npx tsc",
+    "start": "yarn compile && node ./dist"
+  },
   "devDependencies": {
     "@types/node": "^20.11.17",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
@@ -15,7 +19,10 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
+    "chalk": "4.1.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
     "puppeteer": "^22.0.0",
-    "puppeteer-core": "^22.0.0"
+    "reflect-metadata": "^0.2.1"
   }
 }
