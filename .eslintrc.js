@@ -9,5 +9,6 @@ module.exports = {
   },
   rules: {
     'no-constant-condition': 'off',
+    '@typescript-eslint/no-unused-vars': 'off',
   },
 };

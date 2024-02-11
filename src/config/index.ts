@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 import { Exclude } from 'class-transformer';
-import { Max, Min, validate } from 'class-validator';
+import { IsUrl, Max, Min, validate } from 'class-validator';
 
 interface IScraperConfig {
   BOJ_ROOT: string; // Root url of individual problem
@@ -26,7 +26,7 @@ const DefaultConfig = {
 export class ScraperConfig {
   private static configInstance: ScraperConfig;
 
-  @Exclude() private readonly BOJ_ROOT: string;
+  @Exclude() @IsUrl() private readonly BOJ_ROOT: string;
 
   @Exclude() @Min(1) @Max(5) private readonly CHUNK: number;
 
