@@ -1,5 +1,12 @@
 import { Page } from 'puppeteer';
 
+/**
+ *
+ * Parse HTML text
+ *
+ * Use react-parse-html
+ */
+
 export async function ProblemScraper(
   page: Page,
   url: string,
