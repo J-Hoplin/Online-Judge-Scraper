@@ -35,6 +35,32 @@ If validation failed, it will return an error.
 
 **In this project, I set puppeteer cache directory to project directory to prevent chronium cache collision with other puppeteer application. If you don't want this, remove `.puppeteerrc.js` and reinstall puppeteer.**
 
+### Add repository
+
+For future update plan of `Online Judge System`, use pre-defined repository pattern if you need to change another database management system. Below are the example skeleton code of adding PostgreSQL Repository. **Repository should be defined in `src/database/repository`(this is just convention of the project)**.
+
+```typescript
+import { PrismaConnector } from '../connector';
+import { IRepository } from './repository.interface';
+
+export class PostgreSQLRepository extends PrismaConnector implements IRepository{
+    consturctor(){
+      super();
+    }
+    async saveProblem(
+        title: string,
+        problemHTML: string,
+        inputHTML: string,
+        outputHTML: string,
+        timeLimit: number,
+        memoryLimit: number
+        examples:string[][]
+    ): Promise<void> {
+        // Implement your repository
+    }
+}
+```
+
 ### How to use?
 
 1. Install dependencies
