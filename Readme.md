@@ -1,6 +1,6 @@
 ## Online Judge Scraper
 
-Online Web Scraper for [Online Judge System Backend](https://github.com/J-Hoplin/Online-Judge-System).
+Online Web Scraper for [Online Judge System Backend](https://github.com/J-Hoplin/Online-Judge-System). This scraper scrape datas from [Baekjoon Online Judge](https://www.acmicpc.net/)
 
 ---
 
