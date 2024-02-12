@@ -8,7 +8,12 @@ import { ScraperConfig } from './config';
 import { allocatePages, closePages } from './tab-management';
 import { ProblemScraper } from './app';
 import { ColorPrinter } from './printer';
+import { config } from 'dotenv';
 
+// Initialzie Dotenv
+config();
+
+// Console color printer
 const printer = new ColorPrinter();
 
 async function main() {
