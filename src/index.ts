@@ -7,6 +7,9 @@ puppeteer.use(StealthPlugin());
 import { ScraperConfig } from './config';
 import { allocatePages, closePages } from './tab-management';
 import { ProblemScraper } from './app';
+import { ColorPrinter } from './printer';
+
+const printer = new ColorPrinter();
 
 async function main() {
   // Use default setting
@@ -20,6 +23,9 @@ async function main() {
   const [start, end] = config.range;
   let problemNubmerIndex = start;
 
+  let successCounter = 0;
+  let failCounter = 0;
+
   while (true) {
     // Slice by chunk. If it's over range return null and filter
     const problemNumberSet = Array.from({ length: config.chunk }, (_, i) => {
@@ -31,6 +37,9 @@ async function main() {
         return ProblemScraper(tabs[index], config.baseURL, nubmer);
       }),
     );
+    result.forEach((isSuccess) => {
+      isSuccess ? successCounter++ : failCounter++;
+    });
 
     // Save problem number index
     problemNubmerIndex = problemNumberSet[problemNumberSet.length - 1] + 1;
@@ -42,6 +51,14 @@ async function main() {
 
   await closePages(tabs);
   await browser.close();
+
+  const totalScraped = end - start + 1;
+  printer.normal(
+    `Success Rate: ${((successCounter / totalScraped) * 100).toFixed(2)}% (${successCounter} problem(s))`,
+  );
+  printer.error(
+    `Failed Rate: ${((failCounter / totalScraped) * 100).toFixed(2)}% (${failCounter} problem(s))`,
+  );
 }
 
 main();

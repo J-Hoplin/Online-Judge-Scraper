@@ -1,6 +1,8 @@
-import chalk from 'chalk';
 import { Exclude } from 'class-transformer';
 import { IsUrl, Max, Min, validate } from 'class-validator';
+import { ColorPrinter } from '../printer';
+
+const printer = new ColorPrinter();
 
 interface IScraperConfig {
   BOJ_ROOT: string; // Root url of individual problem
@@ -60,23 +62,21 @@ export class ScraperConfig {
         ScraperConfig.configInstance.RANGE_START >
         ScraperConfig.configInstance.RANGE_END
       ) {
-        process.stdout.write(chalk.red('❌Invalid range defined') + '\n');
+        printer.error('❌Invalid range defined');
         process.exit(1);
       }
 
       // Validate entire value
       const validationResult = await validate(ScraperConfig.configInstance);
       if (validationResult.length) {
-        process.stdout.write(chalk.red('❌Fail to load config datas') + '\n');
+        printer.error('❌Fail to load config datas');
         for (const err of validationResult) {
           const message = `🔧${err.property}: ${Object.values(err.constraints)}`;
-          process.stdout.write(chalk.yellow(message) + '\n');
+          printer.warn(message);
         }
         process.exit(1);
       }
-      process.stdout.write(
-        chalk.green('✨Config datas successfully loaded!' + '\n'),
-      );
+      printer.normal('✨Config datas successfully loaded!');
     }
 
     return ScraperConfig.configInstance;
