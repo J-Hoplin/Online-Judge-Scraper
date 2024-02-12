@@ -17,3 +17,9 @@ export class ColorPrinter {
     this.standardWrite(chalk.yellow(...text));
   }
 }
+
+export function ProgressIndicator(progress: number) {
+  process.stdout.clearLine(0);
+  process.stdout.cursorTo(0);
+  process.stdout.write(`In progress: ${progress.toFixed(2)}%`);
+}

@@ -1,6 +1,11 @@
 import { zip } from 'lodash';
 import { Page } from 'puppeteer';
 
+import { MySQLRepository } from '../database/repository/mysql.repository';
+
+// Prisma Database Connector
+const repository = new MySQLRepository();
+
 /**
  *
  * Parse HTML text
@@ -41,14 +46,23 @@ export async function ProblemScraper(
     const descriptionSelector = await page.$('#problem_description');
     const descriptionHTMLText = await page.evaluate((page) => {
       // Trim innerHTML
-      return page.innerHTML.trim();
+      const html = page.innerHTML.trim();
+      return html ?? '';
     }, descriptionSelector);
 
     // Input
     const inputSelector = await page.$('#problem_input');
     const inputHTMLText = await page.evaluate((page) => {
-      return page.innerHTML.trim();
+      const html = page.innerHTML.trim();
+      return html ?? '';
     }, inputSelector);
+
+    // Output
+    const outputSelector = await page.$('#problem_output');
+    const outputHTMLText = await page.evaluate((page) => {
+      const html = page.innerHTML.trim();
+      return html ?? '';
+    }, outputSelector);
 
     // Examples
     // CSS Attribute Substring
@@ -57,7 +71,10 @@ export async function ProblemScraper(
     const exampleInputs = await page.$$eval(
       'section[id^="sampleinput"] > pre',
       (examples) => {
-        return examples.map((example) => example.outerHTML);
+        return examples.map((example) => {
+          const html = example.outerHTML.trim();
+          return html ?? '';
+        });
       },
     );
 
@@ -65,12 +82,24 @@ export async function ProblemScraper(
     const exampleOutputs = await page.$$eval(
       'section[id^="sampleoutput"] > pre',
       (outputs) => {
-        return outputs.map((output) => output.outerHTML);
+        return outputs.map((output) => {
+          const html = output.outerHTML.trim();
+          return html ?? '';
+        });
       },
     );
 
     const zipInputOutput = zip(exampleInputs, exampleOutputs);
-
+    await repository.saveProblem(
+      titleContent,
+      descriptionHTMLText,
+      inputHTMLText,
+      outputHTMLText,
+      timeLimitValue,
+      memoryLimitValue,
+      zipInputOutput,
+    );
+    // Return true if success
     return true;
   } catch (err) {
     // Retrun false if failed

@@ -6,7 +6,8 @@
   "author": "J-hoplin1 <jhoplin7259@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "compile": "npx tsc",
+    "compile": "tsc",
+    "prisma:generate": "prisma generate",
     "start": "yarn compile && node ./dist"
   },
   "devDependencies": {
@@ -20,11 +21,13 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
+    "@prisma/client": "^5.9.1",
     "chalk": "4.1.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
     "dotenv": "^16.4.2",
     "lodash": "^4.17.21",
+    "prisma": "^5.9.1",
     "puppeteer": "^22.0.0",
     "puppeteer-extra": "^3.3.6",
     "puppeteer-extra-plugin-stealth": "^2.11.2",
