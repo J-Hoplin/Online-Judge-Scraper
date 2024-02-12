@@ -17,22 +17,27 @@ async function main() {
   // Initialize tabs
   const tabs = await allocatePages(browser, config.chunk);
 
-  await ProblemScraper(tabs[0], config.baseURL, 1000);
 
-  // let problemNubmerIndex = start;
-  // while (true) {
-  //   // Slice by chunk. If it's over range return null and filter
-  //   const problemNumberSet = Array.from({ length: config.chunk }, (_, i) => {
-  //     return problemNubmerIndex + i <= end ? problemNubmerIndex + i : null;
-  //   }).filter((x) => x);
+  const [start,end] = config.range
+  let problemNubmerIndex = start;
 
-  //   // Save problem number index
-  //   problemNubmerIndex = problemNumberSet[problemNumberSet.length - 1];
-  //   // While loop exit condition
-  //   if (problemNubmerIndex >= end) {
-  //     break;
-  //   }
-  // }
+  while (true) {
+    // Slice by chunk. If it's over range return null and filter
+    const problemNumberSet = Array.from({ length: config.chunk }, (_, i) => {
+      return problemNubmerIndex + i <= end ? problemNubmerIndex + i : null;
+    }).filter((x) => x);
+
+    await Promise.all(problemNumberSet.map((nubmer,index) => {
+      return ProblemScraper(tabs[index],config.baseURL,nubmer)
+    }))
+    
+    // Save problem number index
+    problemNubmerIndex = problemNumberSet[problemNumberSet.length - 1];
+    // While loop exit condition
+    if (problemNubmerIndex >= end) {
+      break;
+    }
+  }
 
   await closePages(tabs);
   await browser.close();

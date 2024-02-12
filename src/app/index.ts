@@ -1,3 +1,4 @@
+import { zip } from 'lodash';
 import { Page } from 'puppeteer';
 
 /**
@@ -33,14 +34,42 @@ export async function ProblemScraper(
         return [timeLimit, memoryLimit];
       } catch (err) {
         // Syntax Error if querySelectorAll get invalid selector
-        return [0, 0];
+        return [5, 128];
       }
     }, tableSelector);
-    // Description
-    const description = await page.$('#problem_description');
+    // Description(Problem)
+    const descriptionSelector = await page.$('#problem_description');
     const descriptionHTMLText = await page.evaluate((page) => {
+      // Trim innerHTML
       return page.innerHTML.trim();
-    }, description);
+    }, descriptionSelector);
+
+    // Input
+    const inputSelector = await page.$('#problem_input');
+    const inputHTMLText = await page.evaluate((page) => {
+      return page.innerHTML.trim();
+    }, inputSelector);
+
+    // Examples
+    // CSS Attribute Substring
+    // https://drafts.csswg.org/selectors-4/#attribute-substrings
+    // Get all of section with id attribute starts with 'sampleinput'
+    const exampleInputs = await page.$$eval(
+      'section[id^="sampleinput"] > pre',
+      (examples) => {
+        return examples.map((example) => example.outerHTML);
+      },
+    );
+
+    // Output
+    const exampleOutputs = await page.$$eval(
+      'section[id^="sampleoutput"] > pre',
+      (outputs) => {
+        return outputs.map((output) => output.outerHTML);
+      },
+    );
+
+    const zipInputOutput = zip(exampleInputs, exampleOutputs);
 
     return true;
   } catch (err) {
