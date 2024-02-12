@@ -13,7 +13,7 @@ const DefaultConfig = {
   BOJ_ROOT: 'https://www.acmicpc.net/problem',
   CHUNK: 3,
   RANGE_START: 1000,
-  RANGE_END: 3000,
+  RANGE_END: 1006,
 };
 
 /**

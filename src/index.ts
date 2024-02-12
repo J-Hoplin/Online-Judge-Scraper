@@ -17,8 +17,7 @@ async function main() {
   // Initialize tabs
   const tabs = await allocatePages(browser, config.chunk);
 
-
-  const [start,end] = config.range
+  const [start, end] = config.range;
   let problemNubmerIndex = start;
 
   while (true) {
@@ -27,14 +26,16 @@ async function main() {
       return problemNubmerIndex + i <= end ? problemNubmerIndex + i : null;
     }).filter((x) => x);
 
-    await Promise.all(problemNumberSet.map((nubmer,index) => {
-      return ProblemScraper(tabs[index],config.baseURL,nubmer)
-    }))
-    
+    const result = await Promise.all(
+      problemNumberSet.map((nubmer, index) => {
+        return ProblemScraper(tabs[index], config.baseURL, nubmer);
+      }),
+    );
+
     // Save problem number index
-    problemNubmerIndex = problemNumberSet[problemNumberSet.length - 1];
+    problemNubmerIndex = problemNumberSet[problemNumberSet.length - 1] + 1;
     // While loop exit condition
-    if (problemNubmerIndex >= end) {
+    if (problemNubmerIndex > end) {
       break;
     }
   }
