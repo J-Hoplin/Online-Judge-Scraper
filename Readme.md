@@ -33,6 +33,8 @@ If validation failed, it will return an error.
 🔧RANGE_END: RANGE_END must not be greater than 31000
 ```
 
+**In this project, I set puppeteer cache directory to project directory to prevent chronium cache collision with other puppeteer application. If you don't want this, remove `.puppeteerrc.js` and reinstall puppeteer.**
+
 ### How to use?
 
 1. Install dependencies
@@ -54,3 +56,5 @@ If validation failed, it will return an error.
    ```
    yarn start
    ```
+
+![](./img/1.png)
