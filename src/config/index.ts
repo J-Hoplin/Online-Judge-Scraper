@@ -5,17 +5,17 @@ import { ColorPrinter } from '../printer';
 const printer = new ColorPrinter();
 
 interface IScraperConfig {
-  BOJ_ROOT: string; // Root url of individual problem
-  CHUNK: number; // Reffers to maximum chunk of request of browser. Recommend to use maximum 5
-  RANGE_START: number;
-  RANGE_END: number; // End of question
+  readonly BOJ_ROOT: string; // Root url of individual problem
+  readonly CHUNK: number; // Reffers to maximum chunk of request of browser. Recommend to use maximum 5
+  readonly RANGE_START: number;
+  readonly RANGE_END: number; // End of question
 }
 
 const DefaultConfig = {
   BOJ_ROOT: 'https://www.acmicpc.net/problem',
   CHUNK: 3,
   RANGE_START: 1000,
-  RANGE_END: 1006,
+  RANGE_END: 1100,
 };
 
 /**
@@ -48,15 +48,26 @@ export class ScraperConfig {
     return [this.RANGE_START, this.RANGE_END];
   }
 
-  private constructor(config: IScraperConfig = DefaultConfig) {
-    Object.assign(this, config);
+  private constructor() {
+    const finalConfig: IScraperConfig = {
+      BOJ_ROOT: process.env.BOJ_ROOT
+        ? process.env.BOJ_ROOT
+        : DefaultConfig.BOJ_ROOT,
+      CHUNK: parseInt(process.env.CHUNK) ?? DefaultConfig.CHUNK,
+      RANGE_START: process.env.RANGE_START
+        ? parseInt(process.env.RANGE_START)
+        : DefaultConfig.RANGE_START,
+      RANGE_END: process.env.RANGE_END
+        ? parseInt(process.env.RANGE_END)
+        : DefaultConfig.RANGE_END,
+    };
+
+    const setConfig = Object.assign(this, finalConfig);
   }
 
-  public static async LoadConfig(
-    config?: IScraperConfig,
-  ): Promise<ScraperConfig> {
+  public static async LoadConfig(): Promise<ScraperConfig> {
     if (!ScraperConfig.configInstance) {
-      ScraperConfig.configInstance = new ScraperConfig(config);
+      ScraperConfig.configInstance = new ScraperConfig();
       // Validate Range
       if (
         ScraperConfig.configInstance.RANGE_START >
