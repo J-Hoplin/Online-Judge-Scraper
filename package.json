@@ -6,7 +6,8 @@
   "author": "J-hoplin1 <jhoplin7259@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "compile": "npx tsc",
+    "compile": "tsc",
+    "prisma:generate": "prisma generate",
     "start": "yarn compile && node ./dist"
   },
   "devDependencies": {

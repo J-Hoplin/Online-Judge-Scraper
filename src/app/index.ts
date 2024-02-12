@@ -99,6 +99,7 @@ export async function ProblemScraper(
       memoryLimitValue,
       zipInputOutput,
     );
+    // Return true if success
     return true;
   } catch (err) {
     // Retrun false if failed
