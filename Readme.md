@@ -1,6 +1,6 @@
 ## Online Judge Scraper
 
-Online Web Scraper for [Online Judge System Backend](https://github.com/J-Hoplin/Online-Judge-System). This scraper scrape datas from [Baekjoon Online Judge](https://www.acmicpc.net/)
+Online Web Scraper for [Online Judge System Backend](https://github.com/J-Hoplin/Online-Judge-System). This scraper scrape datas from [Baekjoon Online Judge](https://www.acmicpc.net/).
 
 ---
 
@@ -12,7 +12,7 @@ Online Web Scraper for [Online Judge System Backend](https://github.com/J-Hoplin
 
 ### Be aware these
 
-**Be aware that you need to start [`Online Judge System`](https://github.com/J-Hoplin/Online-Judge-System)'s Database to be initialized.**
+**Be aware that your [`Online Judge System`](https://github.com/J-Hoplin/Online-Judge-System)'s Database should be initialized.**
 
 The `DATABASE_URL` in the .env file must be the same with `DATABASE_URL` of `Online Judge System`.
 
