@@ -72,7 +72,7 @@ export async function ProblemScraper(
       'section[id^="sampleinput"] > pre',
       (examples) => {
         return examples.map((example) => {
-          const html = example.outerHTML.trim();
+          const html = example.textContent.trim();
           return html ?? '';
         });
       },
@@ -83,7 +83,7 @@ export async function ProblemScraper(
       'section[id^="sampleoutput"] > pre',
       (outputs) => {
         return outputs.map((output) => {
-          const html = output.outerHTML.trim();
+          const html = output.textContent.trim();
           return html ?? '';
         });
       },
